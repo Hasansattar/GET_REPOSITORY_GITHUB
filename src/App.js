@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+
 import './App.css';
 
 function App() {
+  const [repos, setRepos] = useState([{}]);
+
+  useEffect(() => {
+    async function githubRepo() {
+      const responce = await fetch("https://api.github.com/users/Hasansattar/repos")
+      const data = await responce.json();
+
+
+      setRepos(data);
+
+      console.log(data);
+
+    }
+
+    githubRepo();
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <  div className="App" >
+      < h1>
+        hasan
+      </h1>
+      <ol>
+        {repos.map((repoObj, i) => {
+          return (
+            <li key={i}>
+
+              <a href={repoObj.svn_url}>{repoObj.name}</a><br />
+                   Language:{repoObj.language}
+            </li>
+
+          )
+        })}
+
+
+      </ol> 
+    </div >
   );
 }
 
